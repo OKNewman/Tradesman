@@ -2,3 +2,4 @@
 .idea/
 __pycache__
 venv/
+_Docs_ignore/
