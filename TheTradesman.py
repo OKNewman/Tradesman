@@ -71,8 +71,20 @@ def buy_action(asset, asset_price):
     return asset
 
 
+def sell_action(asset, asset_price):
+    global player_asset_dosh
+    clear()
+    status_commerce()
+    str_amount_asset = input("Selling how many?: ")
+    amount_asset = int(str_amount_asset)
+    dosh_diff = amount_asset * asset_price
+    player_asset_dosh = player_asset_dosh + dosh_diff
+    asset = asset - amount_asset
+    print("Gaining " + str(dosh_diff) + " dosh for " + str(amount_asset) + " unit(s).")
+    return asset
+
+
 def buy_menu():
-    # global player_asset_dosh
     global player_asset_widget
     global player_asset_app
     global player_asset_stock
@@ -83,43 +95,18 @@ def buy_menu():
     print("3. Stock")
     print("4. Back to Main Menu")
     choice = input("What're ya buyin'?: ")
-    if choice == "0":
+    if choice == "1":
         print("Widgets, eh?")
         player_asset_widget = buy_action(player_asset_widget, loc_price_widget)
         return
-    if choice == "1":
-        clear()
-        status_commerce()
-        str_amount_widget = input("Buying how many widgets?: ")
-        amount_widget = int(str_amount_widget)
-        dosh_diff = amount_widget * loc_price_widget
-        player_asset_dosh = player_asset_dosh - dosh_diff
-        player_asset_widget = player_asset_widget + amount_widget
-        print("Gaining " + str(amount_widget) + " widget(s), losing " + str(dosh_diff) + " dosh.")
-        sleep(1)
-        return
         #TODO: Add purchase validation
     if choice == "2":
-        clear()
-        status_commerce()
-        str_amount_app = input("Buying how many app(s)?: ")
-        amount_app = int(str_amount_app)
-        dosh_diff = amount_app * loc_price_app
-        player_asset_dosh = player_asset_dosh - dosh_diff
-        player_asset_app = player_asset_app + amount_app
-        print("Gaining " + str(amount_app) + " app(s), losing " + str(dosh_diff) + " dosh.")
-        sleep(1)
+        print("Apps, huh?")
+        player_asset_app = buy_action(player_asset_app, loc_price_app)
         return
     if choice == "3":
-        clear()
-        status_commerce()
-        str_amount_stock = input("Buying how much stock?: ")
-        amount_stock = int(str_amount_stock)
-        dosh_diff = amount_stock * loc_price_stock
-        player_asset_dosh = player_asset_dosh - dosh_diff
-        player_asset_stock = player_asset_stock + amount_stock
-        print("Gaining " + str(amount_stock) + " share(s) of stock, losing " + str(dosh_diff) + " dosh.")
-        sleep(1)
+        print("High roller wants some stock?")
+        player_asset_stock = buy_action(player_asset_stock, loc_price_stock)
         return
     if choice == "4":
         clear()
@@ -134,11 +121,39 @@ def buy_menu():
 
 
 def sell_menu():
-    print("==========SELL MENU=========")
-    print("Coming Soon!")
-    sleep(1)
-    clear()
-    return
+    global player_asset_widget
+    global player_asset_app
+    global player_asset_stock
+    print("==========SELL MENU==========")
+    status_commerce()
+    print("1. Widget(s)")
+    print("2. App(s)")
+    print("3. Stock")
+    print("4. Back to Main Menu")
+    choice = input("What're ya sellin'?: ")
+    if choice == "1":
+        print("Widgets, eh?")
+        player_asset_widget = sell_action(player_asset_widget, loc_price_widget)
+        return
+        #TODO: Add purchase validation
+    if choice == "2":
+        print("Apps, huh?")
+        player_asset_app = sell_action(player_asset_app, loc_price_app)
+        return
+    if choice == "3":
+        print("Cashing out some stock?")
+        player_asset_stock = sell_action(player_asset_stock, loc_price_stock)
+        return
+    if choice == "4":
+        clear()
+        game_menu()
+    else:
+        print("Choice invalid. Try again.")
+        sleep(1)
+        clear()
+        buy_menu()
+        # TODO: add an else here to catch invalid answers
+        # Note: It seems to work anyway
 
 
 def main_menu():
