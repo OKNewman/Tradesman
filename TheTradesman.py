@@ -58,8 +58,21 @@ def travel_menu():
     return
 
 
-def buy_menu():
+def buy_action(asset, asset_price):
     global player_asset_dosh
+    clear()
+    status_commerce()
+    str_amount_asset = input("Buying how many?: ")
+    amount_asset = int(str_amount_asset)
+    dosh_diff = amount_asset * asset_price
+    player_asset_dosh = player_asset_dosh - dosh_diff
+    asset = asset + amount_asset
+    print("Gaining " + str(amount_asset) + " for " + str(dosh_diff) + " dosh.")
+    return asset
+
+
+def buy_menu():
+    # global player_asset_dosh
     global player_asset_widget
     global player_asset_app
     global player_asset_stock
@@ -70,6 +83,10 @@ def buy_menu():
     print("3. Stock")
     print("4. Back to Main Menu")
     choice = input("What're ya buyin'?: ")
+    if choice == "0":
+        print("Widgets, eh?")
+        player_asset_widget = buy_action(player_asset_widget, loc_price_widget)
+        return
     if choice == "1":
         clear()
         status_commerce()
