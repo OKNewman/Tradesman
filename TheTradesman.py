@@ -64,11 +64,18 @@ def buy_action(asset, asset_price):
     status_commerce()
     str_amount_asset = input("Buying how many?: ")
     amount_asset = int(str_amount_asset)
+    if (amount_asset < 0):
+        print("Buying negative units? I think you mean to \"sell\" those.")
+        return asset
     dosh_diff = amount_asset * asset_price
-    player_asset_dosh = player_asset_dosh - dosh_diff
-    asset = asset + amount_asset
-    print("Gaining " + str(amount_asset) + " for " + str(dosh_diff) + " dosh.")
-    return asset
+    if (dosh_diff > player_asset_dosh):
+        print("You don't have enough dosh for " + str_amount_asset + " of those.")
+        return asset
+    else:
+        player_asset_dosh = player_asset_dosh - dosh_diff
+        asset = asset + amount_asset
+        print("Gaining " + str(amount_asset) + " for " + str(dosh_diff) + " dosh.")
+        return asset
 
 
 def sell_action(asset, asset_price):
@@ -77,11 +84,18 @@ def sell_action(asset, asset_price):
     status_commerce()
     str_amount_asset = input("Selling how many?: ")
     amount_asset = int(str_amount_asset)
-    dosh_diff = amount_asset * asset_price
-    player_asset_dosh = player_asset_dosh + dosh_diff
-    asset = asset - amount_asset
-    print("Gaining " + str(dosh_diff) + " dosh for " + str(amount_asset) + " unit(s).")
-    return asset
+    if (amount_asset < 0):
+        print("Selling negative units? I think you mean to \"buy\" those.")
+        return asset
+    if (amount_asset > asset):
+        print("You can't sell " + str_amount_asset + " units when you only have " + str(asset) + ".")
+        return asset
+    else:
+        dosh_diff = amount_asset * asset_price
+        player_asset_dosh = player_asset_dosh + dosh_diff
+        asset = asset - amount_asset
+        print("Gaining " + str(dosh_diff) + " dosh for " + str(amount_asset) + " unit(s).")
+        return asset
 
 
 def buy_menu():
