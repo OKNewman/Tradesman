@@ -51,11 +51,59 @@ def new_game():
     return playername
 
 
+def travel_action():
+    global player_asset_dosh
+    clear()
+    status_commerce()
+    str_amount_asset = input("Buying how many?: ")
+    amount_asset = int(str_amount_asset)
+    if (amount_asset < 0):
+        print("Buying negative units? I think you mean to \"sell\" those.")
+        return asset
+    dosh_diff = amount_asset * asset_price
+    if (dosh_diff > player_asset_dosh):
+        print("You don't have enough dosh for " + str_amount_asset + " of those.")
+        return asset
+    else:
+        player_asset_dosh = player_asset_dosh - dosh_diff
+        asset = asset + amount_asset
+        print("Gaining " + str(amount_asset) + " for " + str(dosh_diff) + " dosh.")
+        return asset
+
+
 def travel_menu():
+    global player_location
+    global loc_price_widget
+    global loc_price_app
+    global loc_price_stock
     print("==========TRAVEL MENU==========")
-    print("Coming soon!")
-    sleep(1)    
-    return
+    status_commerce()
+    print("1. Coffee Shop")
+    print("2. The 'Burbs")
+    print("3. CurenCity")
+    print("4. Back to Main Menu")
+    choice = input("Where to, " + playername + "?")
+    if choice == "1":
+        print("Widgets, eh?")
+        player_asset_widget = buy_action(player_asset_widget, loc_price_widget)
+        return
+        #TODO: Add purchase validation
+    if choice == "2":
+        print("Apps, huh?")
+        player_asset_app = buy_action(player_asset_app, loc_price_app)
+        return
+    if choice == "3":
+        print("High roller wants some stock?")
+        player_asset_stock = buy_action(player_asset_stock, loc_price_stock)
+        return
+    if choice == "4":
+        clear()
+        game_menu()
+    else:
+        print("Choice invalid. Try again.")
+        sleep(1)
+        clear()
+        buy_menu()
 
 
 def buy_action(asset, asset_price):
@@ -113,7 +161,6 @@ def buy_menu():
         print("Widgets, eh?")
         player_asset_widget = buy_action(player_asset_widget, loc_price_widget)
         return
-        #TODO: Add purchase validation
     if choice == "2":
         print("Apps, huh?")
         player_asset_app = buy_action(player_asset_app, loc_price_app)
@@ -130,8 +177,6 @@ def buy_menu():
         sleep(1)
         clear()
         buy_menu()
-        # TODO: add an else here to catch invalid answers
-        # Note: It seems to work anyway
 
 
 def sell_menu():
@@ -149,7 +194,6 @@ def sell_menu():
         print("Widgets, eh?")
         player_asset_widget = sell_action(player_asset_widget, loc_price_widget)
         return
-        #TODO: Add purchase validation
     if choice == "2":
         print("Apps, huh?")
         player_asset_app = sell_action(player_asset_app, loc_price_app)
@@ -166,8 +210,6 @@ def sell_menu():
         sleep(1)
         clear()
         buy_menu()
-        # TODO: add an else here to catch invalid answers
-        # Note: It seems to work anyway
 
 
 def main_menu():
