@@ -2,7 +2,7 @@ from os import system, name
 from time import sleep
 from TitleCards import companycard
 from TitleCards import gametitle
-# import winsound
+import vlc
 
 bool_exit = False
 
@@ -13,7 +13,7 @@ player_asset_app = 0
 player_asset_stock = 0
 player_asset_dosh = 10000
 player_day = 1
-player_location = "coffee_shop"
+player_location = "Coffee Shop"
 loc_price_widget = 10
 loc_price_app = 50
 loc_price_stock = 100
@@ -51,25 +51,24 @@ def new_game():
     return playername
 
 
-def travel_action():
-    global player_asset_dosh
-    clear()
-    status_commerce()
-    str_amount_asset = input("Buying how many?: ")
-    amount_asset = int(str_amount_asset)
-    if (amount_asset < 0):
-        print("Buying negative units? I think you mean to \"sell\" those.")
-        return asset
-    dosh_diff = amount_asset * asset_price
-    if (dosh_diff > player_asset_dosh):
-        print("You don't have enough dosh for " + str_amount_asset + " of those.")
-        return asset
+def travel_action(str_menu_choice):
+    global player_location
+    global player_day
+    if (str_menu_choice == player_location):
+        print("You're already here!")
+        game_menu()
     else:
-        player_asset_dosh = player_asset_dosh - dosh_diff
-        asset = asset + amount_asset
-        print("Gaining " + str(amount_asset) + " for " + str(dosh_diff) + " dosh.")
-        return asset
-
+        clear()
+        print("Are you sure you want to travel to " + str_menu_choice + "?")
+        print("1. Yes")
+        print("2. No")
+        confirm = input()
+        if (confirm is "1"):
+            player_location = str_menu_choice
+            player_day += 1
+        else:
+            return
+        return
 
 def travel_menu():
     global player_location
@@ -80,21 +79,17 @@ def travel_menu():
     status_commerce()
     print("1. Coffee Shop")
     print("2. The 'Burbs")
-    print("3. CurenCity")
+    print("3. CurrenCity")
     print("4. Back to Main Menu")
     choice = input("Where to, " + playername + "?")
     if choice == "1":
-        print("Widgets, eh?")
-        player_asset_widget = buy_action(player_asset_widget, loc_price_widget)
+        travel_action("Coffee Shop")
         return
-        #TODO: Add purchase validation
     if choice == "2":
-        print("Apps, huh?")
-        player_asset_app = buy_action(player_asset_app, loc_price_app)
+        travel_action("The 'Burbs")
         return
     if choice == "3":
-        print("High roller wants some stock?")
-        player_asset_stock = buy_action(player_asset_stock, loc_price_stock)
+        travel_action("CurrenCity")
         return
     if choice == "4":
         clear()
@@ -103,7 +98,7 @@ def travel_menu():
         print("Choice invalid. Try again.")
         sleep(1)
         clear()
-        buy_menu()
+        travel_menu()
 
 
 def buy_action(asset, asset_price):
@@ -221,7 +216,7 @@ def main_menu():
 
 
 def status_commerce():
-    print("You are: " + playername + (" " * 10) + "|Dosh: " + str(player_asset_dosh) + (" " * 10) + "|Day: " + str(player_day))
+    print("You are: " + playername + (" " * 5) + "|Currently at: " + str(player_location) + "|Dosh: " + str(player_asset_dosh) + (" " * 10) + "|Day: " + str(player_day))
     print("        ------Inventory------|-------Prices------")
     print("Widgets: " + str(player_asset_widget) + "         |       " + str(loc_price_widget))
     print("Apps:    " + str(player_asset_app) + "         |       " + str(loc_price_app))
@@ -288,6 +283,9 @@ def game_menu():
 
 
 # winsound.PlaySound("ADG_3DO.wav", winsound.SND_ASYNC)   # Research OS agnostic sound solution
+def bgm_player():
+    # BGM solution here
+    return
 
 
 clear()
