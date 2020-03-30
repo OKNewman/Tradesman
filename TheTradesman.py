@@ -2,6 +2,7 @@ from os import system, name
 from time import sleep
 from TitleCards import companycard
 from TitleCards import gametitle
+from random import randrange
 import vlc
 
 bool_exit = False
@@ -28,6 +29,27 @@ def clear():
 # create better "print" function (self-scaling lines/frames with piping), store in separate python file
 
 
+def market_forces(location):
+    global loc_price_widget
+    global loc_price_app
+    global loc_price_stock
+    if(location == "Coffee Shop"):
+        loc_price_widget = randrange(20, 41)
+        loc_price_app = randrange(70, 111)
+        loc_price_stock = randrange(700, 901)
+        return
+    if(location == "The 'Burbs"):
+        loc_price_widget = randrange(10, 31)
+        loc_price_app = randrange(160, 251)
+        loc_price_stock = randrange(600, 701)
+    if(location == "CurrenCity"):
+        loc_price_widget = randrange(40, 61)
+        loc_price_app = randrange(125, 201)
+        loc_price_stock = randrange(300, 601)
+        return
+    return
+
+
 def startup():
     companycard()
     sleep(1)
@@ -40,6 +62,7 @@ def startup():
 
 
 def new_game():
+    global playername
     print("\n" * 10)
     print("==Welcome, Tradesman==")
     print("\n" * 5)
@@ -48,7 +71,7 @@ def new_game():
     sleep(1)
     print("\n" * 10)
     print("Welcome, " + playername + ".")   # TODO: Move this to whenever you start playing, even when loading
-    return playername
+    return
 
 
 def travel_action(str_menu_choice):
@@ -65,6 +88,7 @@ def travel_action(str_menu_choice):
         confirm = input()
         if (confirm is "1"):
             player_location = str_menu_choice
+            market_forces(str_menu_choice)
             player_day += 1
         else:
             return
@@ -292,7 +316,8 @@ clear()
 
 startup()
 load_game()
-playername = new_game()
+new_game()
+market_forces("Coffee Shop")
 
 while not bool_exit:
     game_menu()
