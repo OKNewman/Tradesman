@@ -3,7 +3,8 @@ from time import sleep
 from TitleCards import companycard
 from TitleCards import gametitle
 from random import randrange
-import vlc
+from FunempMath import intblaster
+#import vlc
 
 bool_exit = False
 
@@ -129,8 +130,13 @@ def buy_action(asset, asset_price):
     global player_asset_dosh
     clear()
     status_commerce()
-    str_amount_asset = input("Buying how many?: ")
-    amount_asset = int(str_amount_asset)
+    str_buyable = str(int(player_asset_dosh / asset_price))
+    str_amount_asset = input("Buying how many? (up to "+ (str_buyable) + "): ")
+    if (intblaster(str_amount_asset) != False):
+        amount_asset = intblaster(str_amount_asset)
+    if (intblaster(str_amount_asset) == False):
+        print("Woah, THAT doesn't make sense!")
+        return asset
     if (amount_asset < 0):
         print("Buying negative units? I think you mean to \"sell\" those.")
         return asset
@@ -149,8 +155,12 @@ def sell_action(asset, asset_price):
     global player_asset_dosh
     clear()
     status_commerce()
-    str_amount_asset = input("Selling how many?: ")
-    amount_asset = int(str_amount_asset)
+    str_amount_asset = input("Selling how many? (up to "+ str(asset) + "): ")
+    if (intblaster(str_amount_asset) != False):
+        amount_asset = intblaster(str_amount_asset)
+    if (intblaster(str_amount_asset) == False):
+        print("Woah, THAT doesn't make sense!")
+        return asset
     if (amount_asset < 0):
         print("Selling negative units? I think you mean to \"buy\" those.")
         return asset
