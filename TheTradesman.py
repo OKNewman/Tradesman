@@ -14,7 +14,7 @@ player_asset_widget = 0
 player_asset_app = 0
 player_asset_stock = 0
 player_asset_dosh = 10000
-player_day = 1
+player_day = 30
 player_location = "Coffee Shop"
 loc_price_widget = 10
 loc_price_app = 50
@@ -50,7 +50,7 @@ def market_forces(location):
         return
     return
 
-
+# Intro "title cards"
 def startup():
     companycard()
     sleep(1)
@@ -61,7 +61,7 @@ def startup():
     clear()
     return
 
-
+# Game start flow
 def new_game():
     global playername
     print("\n" * 10)
@@ -250,7 +250,7 @@ def main_menu():
 
 
 def status_commerce():
-    print("You are: " + playername + (" " * 5) + "|Currently at: " + str(player_location) + "|Dosh: " + str(player_asset_dosh) + (" " * 10) + "|Day: " + str(player_day))
+    print("You are: " + playername + (" " * 5) + "|Currently at: " + str(player_location) + "|Dosh: " + str(player_asset_dosh) + (" " * 10) + "|Days left: " + str(player_day))
     print("        ------Inventory------|-------Prices------")
     print("Widgets: " + str(player_asset_widget) + "         |       " + str(loc_price_widget))
     print("Apps:    " + str(player_asset_app) + "         |       " + str(loc_price_app))
@@ -292,7 +292,7 @@ def game_menu_select():
 
 def save_game():
     print("Save option coming soon!")
-    # Do I want to autosave?
+    # TODO: Set this as a local scoreboard, top 10 maybe?
     return
 
 
