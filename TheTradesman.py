@@ -286,7 +286,6 @@ def game_menu_select():
             clear()
             game_menu()
         # TODO: add an else here to catch invalid answers
-        # Note: It seems to work anyway
     return
 
 
