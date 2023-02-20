@@ -90,7 +90,7 @@ def travel_action(str_menu_choice):
         if (confirm is "1"):
             player_location = str_menu_choice
             market_forces(str_menu_choice)
-            player_day += 1
+            player_day -= 1
         else:
             return
         return
